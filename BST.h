@@ -93,8 +93,8 @@ public:
     if (root == NULL) cout << "The BST is empty.\n";
     else {
       printhelp(root, 0);
-      preOrder();
-      printPostOrder();
+      preOrder(root);
+      printPostOrder(root, 0);
     }
   }
   
