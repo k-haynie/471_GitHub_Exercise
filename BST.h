@@ -34,6 +34,7 @@ private:
   void printhelp(BSTNode<Key, E>*, int) const;
   void printPostOrder(BSTNode<Key, E>*, int) const;
   void visit(BSTNode<Key, E>*) const;
+  void preOrder(BSTNode<Key, E>* node)
 
 public:
   BST() { root = NULL; nodecount = 0; }  // Constructor
@@ -90,7 +91,11 @@ public:
 
   void print() const { // Print the contents of the BST
     if (root == NULL) cout << "The BST is empty.\n";
-    else printhelp(root, 0);
+    else {
+      printhelp(root, 0);
+      preOrder();
+      printPostOrder();
+    }
   }
   
 };
@@ -131,6 +136,7 @@ getmin(BSTNode<Key, E>* rt) {
     return rt;
   else return getmin(rt->left());
 }
+
 template <typename Key, typename E>
 BSTNode<Key, E>* BST<Key, E>::
 deletemin(BSTNode<Key, E>* rt) {
@@ -204,5 +210,15 @@ void BST<Key, E>::printPostOrder(BSTNode<Key, E>* root, int level) const {
   if (root == NULL) return;           // Empty tree
   printhelp(root->left(), level+1);   // Do left subtree
   printhelp(root->right(), level+1);  // Do right subtree
-  visit(root);						  // Print node value
+  visit(root);
+}					
+
+
+// Print node value
+template <typename Key, typename E>
+void BST<Key, E>::preOrder(BSTNode<Key, E>* node) {
+  if (node == NULL) return;           // Empty tree
+  visit(node);						  // Print node value
+  preOrder(node->left());
+  preOrder(node->right());
 }
